@@ -67,4 +67,6 @@ Proyek ini telah dikonfigurasi sebagai situs statis Vite standar dan siap didepl
    * **Output Directory:** `dist`
 5. Klik **Deploy**.
 
-> **Catatan Privasi:** Website ini sudah dilengkapi tag `<meta name="robots" content="noindex, nofollow" />`. Halaman tidak akan diindeks oleh mesin pencari publik (seperti Google atau Bing), namun siapa pun yang menerima tautan langsung tetap dapat membukanya dengan normal.
+> **Catatan Privasi & Keamanan:** 
+> 1. Website ini sudah dilengkapi tag `<meta name="robots" content="noindex, nofollow" />` sehingga tidak akan diindeks oleh mesin pencari publik.
+> 2. Seluruh isi profil dilindungi oleh **layar kunci kode akses (*gatekeeper*)**. Pengunjung harus memasukkan kode akses yang benar agar konten dapat ditampilkan di peramban. Sesi akses tersimpan sementara selama tab peramban aktif.
