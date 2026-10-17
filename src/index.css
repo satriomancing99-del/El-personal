@@ -679,9 +679,133 @@ body {
   padding: 2rem 0;
   background-color: var(--color-bg-alt);
   border-top: 1px solid var(--color-border);
-  text-align: center;
   font-size: 0.82rem;
   color: var(--color-text-subtle);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.btn-relock {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.7rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--color-text-subtle);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-relock:hover {
+  border-color: var(--color-sage);
+  color: var(--color-sage-dark);
+}
+
+/* ==========================================================================
+   LOCK SCREEN (GATEKEEPER) STYLING
+   ========================================================================== */
+.lock-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: var(--color-bg);
+  width: 100%;
+}
+
+.lock-card {
+  width: 100%;
+  max-width: 380px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem 1.8rem;
+  text-align: center;
+  box-shadow: var(--shadow-subtle);
+}
+
+.lock-monogram {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  background: var(--color-sage);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 1.25rem;
+}
+
+.lock-title {
+  font-size: 1.45rem;
+  font-weight: 750;
+  color: var(--color-text-main);
+  margin-bottom: 0.4rem;
+}
+
+.lock-desc {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin-bottom: 1.4rem;
+}
+
+.lock-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lock-input-group {
+  width: 100%;
+}
+
+.lock-input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: 1.15rem;
+  text-align: center;
+  letter-spacing: 3px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  min-height: 46px;
+}
+
+.lock-input:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(83, 115, 93, 0.15);
+}
+
+.lock-input.has-error {
+  border-color: #C54E38;
+}
+
+.lock-error {
+  font-size: 0.84rem;
+  color: #B93826;
+  font-weight: 500;
+  margin-top: -0.25rem;
+}
+
+.lock-submit-btn {
+  width: 100%;
+  justify-content: center;
+  min-height: 46px;
 }
 
 /* ==========================================================================

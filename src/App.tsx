@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { profileData } from './data/profile';
 
 const CURRENT_YEAR = new Date().getFullYear();
+const PASSCODE_HASH = 'dbc135be34e6da3d3860d3b89c2a1e9bf4dc78a6439ca5a977e660207eaafe3c';
+
+async function verifyPasscode(input: string): Promise<boolean> {
+  const trimmed = input.trim();
+  if (trimmed === '0122') return true;
+  try {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(trimmed));
+    const hash = Array.from(new Uint8Array(buf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+    return hash === PASSCODE_HASH;
+  } catch {
+    return trimmed === '0122';
+  }
+}
 
 export const App: React.FC = () => {
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem('el_access_granted') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const [passcode, setPasscode] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     name,
     nickname,
@@ -21,6 +48,93 @@ export const App: React.FC = () => {
 
   const initials = nickname ? nickname.toUpperCase() : 'EL';
 
+  const handleUnlock = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!passcode.trim()) {
+      setErrorMsg('Silakan masukkan kode akses.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    const valid = await verifyPasscode(passcode);
+    setIsSubmitting(false);
+
+    if (valid) {
+      try {
+        sessionStorage.setItem('el_access_granted', 'true');
+      } catch {
+        // ignore storage errors
+      }
+      setIsUnlocked(true);
+      setErrorMsg('');
+      setPasscode('');
+    } else {
+      setErrorMsg('Kode akses tidak sesuai. Silakan periksa kembali.');
+    }
+  };
+
+  const handleLock = () => {
+    try {
+      sessionStorage.removeItem('el_access_granted');
+    } catch {
+      // ignore
+    }
+    setIsUnlocked(false);
+    setPasscode('');
+    setErrorMsg('');
+  };
+
+  // TAMPILAN LOCK SCREEN (Jika Belum Terbuka)
+  if (!isUnlocked) {
+    return (
+      <div className="lock-page-wrapper">
+        <main className="lock-card" role="dialog" aria-labelledby="lock-title">
+          <div className="lock-monogram" aria-hidden="true">
+            {initials}
+          </div>
+          <h1 id="lock-title" className="lock-title">Ruang Personal</h1>
+          <p className="lock-desc">
+            Halaman ini bersifat privat. Silakan masukkan kode akses untuk melanjutkan.
+          </p>
+
+          <form onSubmit={handleUnlock} className="lock-form" noValidate>
+            <div className="lock-input-group">
+              <label htmlFor="passcode-input" className="sr-only">
+                Kode Akses
+              </label>
+              <input
+                id="passcode-input"
+                type="password"
+                inputMode="numeric"
+                autoComplete="off"
+                maxLength={16}
+                placeholder="Masukkan kode akses"
+                value={passcode}
+                onChange={(e) => {
+                  setPasscode(e.target.value);
+                  if (errorMsg) setErrorMsg('');
+                }}
+                className={`lock-input ${errorMsg ? 'has-error' : ''}`}
+                autoFocus
+              />
+            </div>
+
+            {errorMsg && (
+              <p className="lock-error" role="alert">
+                {errorMsg}
+              </p>
+            )}
+
+            <button type="submit" className="btn-primary lock-submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Memeriksa...' : 'Buka Halaman'}
+            </button>
+          </form>
+        </main>
+      </div>
+    );
+  }
+
+  // TAMPILAN WEBSITE UTAMA (Jika Sudah Terbuka)
   return (
     <div className="site-wrapper">
       {/* Aksesibilitas: Skip link untuk pengguna keyboard / screen reader */}
@@ -243,8 +357,11 @@ export const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="site-footer" role="contentinfo">
-        <div className="container">
+        <div className="container footer-content">
           <p>&copy; {CURRENT_YEAR} {name}. Ruang perkenalan personal.</p>
+          <button type="button" onClick={handleLock} className="btn-relock" title="Kunci kembali halaman">
+            Kunci Halaman
+          </button>
         </div>
       </footer>
     </div>
