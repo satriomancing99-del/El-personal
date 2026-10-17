@@ -102,7 +102,7 @@ export const profileData: ProfileData = {
   },
 
   journey: {
-    intro: 'Pendidikan yang sudah saya selesaikan, studi yang sedang saya jalani, dan rencana langkah ke depan:',
+    intro: 'Pendidikan yang sudah saya selesaikan, pengalaman berharga, studi yang sedang saya jalani, dan rencana langkah ke depan:',
     items: [
       {
         id: 's1-uin',
@@ -111,6 +111,14 @@ export const profileData: ProfileData = {
         title: 'S1 Teknik Informatika',
         institution: 'UIN Maulana Malik Ibrahim Malang',
         description: 'Menyelesaikan kuliah S1 bidang komputer dan teknologi di Malang.',
+      },
+      {
+        id: 'pengalaman-lain',
+        stage: 'selesai',
+        badge: 'Pengalaman Berharga',
+        title: 'Penulisan Buku, Anotasi Data, & Pemasaran Digital',
+        institution: 'PT Lini Suara Nusantara, RWS Group, & Harisenin',
+        description: 'Pernah menulis buku pelajaran untuk penerbit, mengerjakan pekerjaan lepas anotasi data, dan mengikuti pelatihan digital marketing.',
       },
       {
         id: 'taiwan-intense',
@@ -127,14 +135,6 @@ export const profileData: ProfileData = {
         title: 'Rencana Magang 1 Tahun & Kerja 2 Tahun',
         institution: 'ASE Semiconductor Taiwan',
         description: 'Rencana komitmen lanjutan setelah lulus kuliah: magang 1 tahun lalu bekerja 2 tahun di perusahaan semikonduktor di Taiwan untuk membangun pengalaman dan kemandirian masa depan. (Tahap ini adalah rencana mendatang, bukan status saat ini).',
-      },
-      {
-        id: 'pengalaman-lain',
-        stage: 'selesai',
-        badge: 'Pengalaman Lainnya',
-        title: 'Penulisan Buku, Anotasi Data, & Pemasaran Digital',
-        institution: 'PT Lini Suara Nusantara, RWS Group, & Harisenin',
-        description: 'Pernah menulis buku pelajaran untuk penerbit, mengerjakan pekerjaan lepas anotasi data, dan mengikuti pelatihan digital marketing.',
       },
     ],
   },
